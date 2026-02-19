@@ -14,5 +14,6 @@ pgvector # PostgreSQL안에서 벡터(임베딩)를 저장하고 검색할 수 �
 
 python-multipart # FastAPI에서 파일업로드를 처리하기 위한 라이브러리 
 pypdf # Python에서 PDF 파일을 읽고 텍스트를 추출하는 라이브러리
+reportlab # PDF 파일을 직접 생성하는 라이브러리
 
 rich # Python에서 터미널 출력(콘솔 출력)을 예쁘고 강력하게 만들어주는 라이브러리
