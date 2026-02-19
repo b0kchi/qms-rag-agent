@@ -103,7 +103,7 @@ pip install -r requirements.txt
 ```
 
 ### 3) Env 설정
-backend/.env.example을 복사해서 backend/.env 생성:
+backend/.env 생성:
 ```bash
 copy .env.example .env
 ```
