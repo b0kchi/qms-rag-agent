@@ -1,0 +1,18 @@
+fastapi # Python을 API 서버를 만드는 웹 프레임워크
+uvicorn[standard] # uvicorn은 FastAPI(웹앱)을 실행시켜주는 서버 프로그램으로 추가 성능 패키지도 포함하였다.
+python-dotenv # .env 파일에 적어둔 환경변수를 자동으로 읽어서 Python프로그램에서 사용할 수 있게 해주는 라이브러리
+
+langchain
+langgraph
+langchain-community # LangChain의 외부 서비스 연결 모음 패키지
+langchain-text-splitters # 문서를 chunk 단위로 쪼개는 전용 라이브러리
+
+sqlalchemy # 파이썬에서 데이터베이스를 다루기위한 ORM 라이브러리
+sqlmodel # FastAPI + PostgreSQL 환경에서 쓰기 좋은 ORM 라이브러리
+psycopg2-binary # Python에서 PostgreSQL에 접속하기 위한 드라이버
+pgvector # PostgreSQL안에서 벡터(임베딩)를 저장하고 검색할 수 있게 해주는 확장도구
+
+python-multipart # FastAPI에서 파일업로드를 처리하기 위한 라이브러리 
+pypdf # Python에서 PDF 파일을 읽고 텍스트를 추출하는 라이브러리
+
+rich # Python에서 터미널 출력(콘솔 출력)을 예쁘고 강력하게 만들어주는 라이브러리
