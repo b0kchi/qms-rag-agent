@@ -123,7 +123,7 @@ uvicorn src.app.main:app --reload --port 8000
 
 ---
 
-### Data Model (Draft)
+### Data Model (Draft) 
 - sql_templates
     - id, name, phase (1 or 2), sql_text, description, is_active
 - analysis_runs (옵션)
