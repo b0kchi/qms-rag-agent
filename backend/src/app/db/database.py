@@ -1,7 +1,7 @@
 # 데이터베이스 연결 및 세션 관리 모듈
 
 from sqlmodel import SQLModel, create_engine, Session # SQLModel은 데이터베이스 테이블을 정의하기 위한 모델들의 부모 클래스, 
-from app.core.config import DATABASE_URL
+from src.app.core.config import DATABASE_URL
 
 engine = create_engine(DATABASE_URL, echo=False) # create_engine은 DB에 접속하기 위한 엔진 객체를 만드는 함수 
 
