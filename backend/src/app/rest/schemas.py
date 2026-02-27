@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 from typing import Any, Literal
 
@@ -30,14 +31,14 @@ class ExecuteRequest(BaseModel):
     conversation_id: str
     selected_strategy: str
 
-    # vector 옵션
+    # vector option
     document_id: str | None = None
 
-    # sql_template 옵션
+    # sql_template option
     template_id: str | None = None
     params: dict[str, Any] | None = None
 
-    # 사용자가 “다시 질문”에 답을 준 경우
+    # user follow-up answer
     user_followup: str | None = None
 
 
@@ -75,3 +76,45 @@ class AnswerResponse(BaseModel):
     answer_text: str
     citations: list[dict] = []
     artifacts: list[Artifact] = []
+
+
+class ChatMessage(BaseModel):
+    message_id: str
+    role: Literal["user", "assistant"]
+    content: str
+    created_at: datetime
+
+
+class ChatSessionSummary(BaseModel):
+    session_id: str
+    title: str
+    created_at: datetime
+    updated_at: datetime
+    last_message_preview: str | None = None
+
+
+class SessionCreateRequest(BaseModel):
+    title: str | None = None
+
+
+class SessionCreateResponse(BaseModel):
+    session: ChatSessionSummary
+
+
+class SessionListResponse(BaseModel):
+    sessions: list[ChatSessionSummary]
+
+
+class SessionMessagesResponse(BaseModel):
+    session: ChatSessionSummary
+    messages: list[ChatMessage]
+
+
+class SessionMessageRequest(BaseModel):
+    message: str
+
+
+class SessionMessageResponse(BaseModel):
+    session: ChatSessionSummary
+    user_message: ChatMessage
+    assistant_message: ChatMessage

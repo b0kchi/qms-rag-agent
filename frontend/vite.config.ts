@@ -5,9 +5,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // FastAPI: http://localhost:8000
-      "/chat": "http://localhost:8000",
-      "/ingest": "http://localhost:8000",
+      // FastAPI: http://localhost:8001
+      "/chat": "http://localhost:8001",
+      "/ingest": "http://localhost:8001",
     },
   },
 });

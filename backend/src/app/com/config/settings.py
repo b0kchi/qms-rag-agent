@@ -1,8 +1,13 @@
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+ENV_PATH = Path(__file__).resolve().parents[4] / ".env"
+
+
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=str(ENV_PATH), extra="ignore")
 
     DATABASE_URL: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/rag"
     EMBEDDING_DIM: int = 384
