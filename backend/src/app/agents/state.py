@@ -1,32 +1,36 @@
-from typing import TypedDict, List, Dict, Any, Optional, Literal
-from langchain_core.messages import BaseMessage
+from dataclasses import dataclass, field
+from typing import Any
 
-Strategy = Literal["VECTOR", "GRAPH", "SQL", "HYBRID"]
-
-class AgentState(TypedDict, total=False):
-    messages: List[BaseMessage]
-
-    query: str
-
-    # Router output
-    strategy: Strategy
-    plan: List[str]  # e.g. ["SQL", "VECTOR", "JUDGE"]
+@dataclass
+class ProposedStrategy:
+    key: str
+    title: str
     rationale: str
 
-    # Inputs/Signals
-    hints: Dict[str, Any]  # detected entities, has_numbers, etc.
+@dataclass
+class RetrievalResult:
+    kind: str  # "chunks" | "sql_rows" | "graph"
+    payload: Any
+    citations: list[dict] = field(default_factory=list)
 
-    # Vector results
-    vector_hits: List[Dict[str, Any]]   # {chunk_id, score, text, file_id, source_page}
+@dataclass
+class AgentState:
+    conversation_id: str
+    query_original: str
+    query_normalized: str
 
-    # Graph results
-    graph_result: Dict[str, Any]        # {nodes:[...], edges:[...], explanation:str}
+    proposed_strategies: list[ProposedStrategy] = field(default_factory=list)
+    selected_strategy: str | None = None
 
-    # SQL results
-    sql_result: Dict[str, Any]          # {template_name, params, rows:[...], summary:str}
+    # SQL template 후보(Plan에서 보여주기 위함)
+    proposed_sql_templates: list[dict] = field(default_factory=list)  # [{id,name,description,required_params}]
 
-    # Judge
-    final_answer: str
-    need_more: bool
-    improve_request: Optional[str]
-    loop_count: int
+    # 실행 결과
+    retrieval: RetrievalResult | None = None
+    validation_ok: bool = False
+    validation_issues: list[str] = field(default_factory=list)
+
+    # 루프/추가질문
+    loop_count: int = 0
+    max_loops: int = 3
+    pending_user_question: str | None = None  # 사용자에게 추가로 물어볼 질문

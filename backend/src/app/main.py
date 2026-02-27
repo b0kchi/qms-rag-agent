@@ -1,18 +1,24 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from app.core.config import settings
-from app.db.init_db import init_db
-from app.api.routes_chat import router as chat_router
-from app.api.routes_files import router as files_router
 
-def create_app():
-    app = FastAPI(title=settings.PROJECT_NAME)
+from app.rest.routers.chat import router as chat_router
+from app.rest.routers.ingest import router as ingest_router
+from app.com.db.init import init_db
 
-    @app.on_event("startup")
-    def on_startup():
-        init_db()
 
-    app.include_router(files_router)
-    app.include_router(chat_router)
-    return app
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # startup
+    init_db()
+    yield
+    # shutdown (필요 시 정리)
 
-app = create_app()
+
+app = FastAPI(
+    title="Hybrid RAG + Multi-Agent API",
+    version="0.1.0",
+    lifespan=lifespan,
+)
+
+app.include_router(chat_router, prefix="/chat", tags=["chat"])
+app.include_router(ingest_router, prefix="/ingest", tags=["ingest"])
